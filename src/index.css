@@ -1,13 +1,111 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body{
+  font-family: 'Roboto', sans-serif;
+  margin : 0;
+  color: #041F60;
+  background-color: #B4F5F0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1, h2, p{
+  margin-top: 0;
+}
+
+.header{
+  height: 100px;
+  background-color: #B4F5F0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid #041F60;
+}
+
+.nav-title{
+  font-weight: 900;
+}
+
+.nav{
+  display: flex;
+  margin: 0;
+  justify-content: space-around;
+  font-size: 50px;
+
+}
+
+.container{
+  background-color: #B4F5F0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: calc(100vh - 101px);
+}
+
+.sign-in-container{
+  justify-content: center;
+  text-align: center;
+}
+
+.sign-in-title{
+  font-size: 72px;
+}
+
+.btn{
+  border-radius: 10px;
+  background-color: #041F60;
+  cursor: pointer;
+  color: #B4F5F0;
+}
+
+.btn:hover{
+  color: #fff;
+}
+
+.sign-out-btn{
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  padding: 0.3em;
+}
+
+.sign-in-btn{
+  font-size: 72px;
+  padding: 0.5em;
+  margin: 0 auto;
+}
+
+.tabs{
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  
+}
+
+.tab-option{
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 25px;
+  text-align: center;
+}
+
+.todos-container{
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.todo{
+  display: flex;
+  background-color: #fff;
+  height: 100px;
+  width: 80%;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+.todo-container{
+  background-color: red;
+  width: 50%;
+}
+
+.done-container{
+  background-color: blue;
+  width: 50%;
 }

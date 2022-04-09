@@ -1,9 +1,15 @@
-import './App.css';
+import {React, useState} from 'react';
+
+import SignInPage from './components/SignInPage';
+import Header from './components/Header';
+import Todos from './components/Todos';
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(1)
   return (
     <div className="App">
-      <h1>hello world</h1>
+      <Header currentUser = {currentUser} setCurrentUser = {setCurrentUser}/>
+      {currentUser ? <Todos/> : <SignInPage setCurrentUser = {setCurrentUser}/>}
     </div>
   );
 }
