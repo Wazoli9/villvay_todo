@@ -15,10 +15,13 @@ export default function Todo() {
                         <h3 className="todo-date">10/11/1999</h3>
                     </div>
                     <div className="todo-detail">
-                    <h3 className="done-btn">Done</h3>
+                    <h3 className="todo-btn btn">Done</h3>
                     </div>
                     <div className="todo-detail">
-                    <h3 className="delete-btn">Delete</h3>
+                    <h3 className="todo-btn btn">Edit</h3>
+                    </div>
+                    <div className="todo-detail">
+                    <h3 className="todo-btn btn">Delete</h3>
                     </div>
                 </div>
             </div>
