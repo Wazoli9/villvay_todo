@@ -1,24 +1,24 @@
 import React from "react";
 
-export default function Todo() {
+export default function Todo(props) {
     return (
         <div className="todo">
             <div className="todo-info">
-                <h2 className="todo-title">Pick up dog</h2>
+                <h2 className="todo-title">{props.todo.title}</h2>
                 <div className="todo-details">
                     <div className="todo-detail">
                         <h4>Asignee</h4>
-                        <h3 className="todo-asignee">Thomas</h3>
+                        <h3 className="todo-asignee">{props.todo.asignee}</h3>
                     </div>
                     <div className="todo-detail">
                         <h4>Date</h4>
-                        <h3 className="todo-date">10/11/1999</h3>
+                        <h3 className="todo-date">{props.todo.date}</h3>
                     </div>
                     <div className="todo-detail">
-                    <h3 className="todo-btn btn">Done</h3>
+                    <h3 className="todo-btn btn">{props.todo.done ? "Not Done" : "Done"}</h3>
                     </div>
                     <div className="todo-detail">
-                    <h3 className="todo-btn btn">Edit</h3>
+                    <h3 onClick={()=>props.handleEdit(props.id, props.todo)} className="todo-btn btn">Edit</h3>
                     </div>
                     <div className="todo-detail">
                     <h3 className="todo-btn btn">Delete</h3>

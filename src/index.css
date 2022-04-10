@@ -69,7 +69,8 @@ h3{
 }
 
 .todo-btn{
-  padding: 0.4em;
+  font-size: 17px;
+  padding: 0.5em;
 }
 
 .create-btn{
@@ -98,7 +99,6 @@ h3{
 }
 
 .tab-option{
-  cursor: pointer;
   text-decoration: underline;
   font-size: 35px;
   text-align: center;
@@ -170,7 +170,7 @@ label, input{
 }
 
 label{
-  font-size: 20px;
+  font-size: 30px;
   text-align: center;
 }
 
@@ -179,14 +179,17 @@ input{
   border-radius: 10px;
   padding: 10px;
   margin-top: 5px;
+  font-size: 20px;
 }
 
 .check-input{
   margin: 10px auto;
+  width: 20px;
+  height: 20px;
 }
 
 .form-btn{
-  font-size: 20px;
+  font-size: 25px;
   width: fit-content;
   margin: auto;
   margin-bottom: 15px;
@@ -195,4 +198,16 @@ input{
 dialog{
   border-radius: 10px;
   border : 4px solid #041F60
+}
+
+dialog::backdrop{
+  background: rgba(0,0,0,.5);
+}
+
+.title-input{
+  width: 500px;
+}
+
+.asignee-input{
+  width : 300px
 }

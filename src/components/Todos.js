@@ -1,10 +1,22 @@
 import { React, useState, useEffect, useRef } from "react";
 import Todo from "./Todo";
+import {
+    collection,
+    query,
+    where,
+    onSnapshot,
+    addDoc,
+    doc,
+    updateDoc
+} from "firebase/firestore";
+import { db } from "../firebase";
 
-export default function Todos() {
+export default function Todos(props) {
+    const [todoEls, setTodoEls] = useState();
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedId, setEditedId] = useState();
     const [createdTodo, setCreatedTodo] = useState({
-        id: undefined,
-        uid:undefined,
+        uid: props.currentUser.uid,
         title: "",
         asignee: "",
         date: "",
@@ -29,9 +41,89 @@ export default function Todos() {
             };
         });
     };
-    const closeModal = ()=>{
-        modalEl.current.close()
+
+    const handleSubmit = async () => {
+        console.log(createdTodo);
+        if(isEditing){
+            await updateDoc(doc(db, 'todos', editedId), createdTodo)
+            setIsEditing(false)
+            setCreatedTodo({
+                uid: props.currentUser.uid,
+                title: "",
+                asignee: "",
+                date: "",
+                done: false,
+            });
+        }
+        else{
+            await addDoc(collection(db, "todos"), createdTodo);
+            setCreatedTodo({
+                uid: props.currentUser.uid,
+                title: "",
+                asignee: "",
+                date: "",
+                done: false,
+            });
+        }
+        modalEl.current.close();
+    };
+
+    const closeModal = () => {
+        modalEl.current.close();
+        setIsEditing(false)
+        setCreatedTodo({
+            uid: props.currentUser.uid,
+            title: "",
+            asignee: "",
+            date: "",
+            done: false,
+        });
+    };
+
+    const handleEdit = (id, todo) =>{
+        modalEl.current.showModal()
+        setIsEditing(true)
+        setCreatedTodo(todo)
+        setEditedId(id)
     }
+
+    const handleDoneToggle = (id) =>{
+        
+    }
+
+    useEffect(() => {
+        const q = query(
+            collection(db, "todos"),
+            where("uid", "==", props.currentUser.uid)
+        );
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            setTodoEls(
+                querySnapshot.docs.map((doc) => {
+                    const todo = {
+                        uid : props.currentUser.uid,
+                        title: doc.data().title,
+                        date: doc.data().date,
+                        done: doc.data().done,
+                        asignee: doc.data().asignee,
+                    };
+                    return (
+                        <Todo
+                            key={doc.id}
+                            todo = {todo}
+                            handleEdit = {handleEdit}
+                            handleDoneToggle = {handleDoneToggle}
+                            id = {doc.id}
+                        />
+                    );
+                })
+            );
+        });
+        return () => {
+            console.log("cleanup");
+            unsubscribe();
+        };
+    }, [props.currentUser]);
+
     return (
         <div className="todos">
             <h2 onClick={openModal} className="create-btn btn">
@@ -40,11 +132,17 @@ export default function Todos() {
             <div className="todos-container">
                 <div className="todo-container">
                     <h3 className="tabs-todo tab-option">To Do</h3>
-                    <Todo />
+                    {todoEls &&
+                        todoEls.filter((todoEl) => {
+                            return !todoEl.props.todo.done;
+                        })}
                 </div>
                 <div className="done-container">
                     <h3 className="tabs-done tab-option">Done</h3>
-                    <Todo />
+                    {todoEls &&
+                        todoEls.filter((todoEl) => {
+                            return todoEl.props.todo.done;
+                        })}
                 </div>
             </div>
             <dialog ref={modalEl}>
@@ -52,6 +150,7 @@ export default function Todos() {
                     <label>
                         Task
                         <input
+                            className="title-input"
                             type="text"
                             value={createdTodo.title}
                             onChange={handleChange}
@@ -61,6 +160,7 @@ export default function Todos() {
                     <label>
                         Asignee
                         <input
+                            className="asignee-input"
                             type="text"
                             value={createdTodo.asignee}
                             onChange={handleChange}
@@ -69,7 +169,8 @@ export default function Todos() {
                     </label>
                     <label>
                         Due Date
-                        <input className="date-input"
+                        <input
+                            className="date-input"
                             type="date"
                             value={createdTodo.date}
                             onChange={handleChange}
@@ -78,16 +179,17 @@ export default function Todos() {
                     </label>
                     <label>
                         Completed
-                        <input className="check-input"
+                        <input
+                            className="check-input"
                             type="checkbox"
-                            value={createdTodo.done}
+                            checked={createdTodo.done}
                             onChange={handleChange}
                             name="done"
                         />
                     </label>
                 </form>
-                <div className="form-btn btn">
-                    Create Task
+                <div onClick={handleSubmit} className="form-btn btn">
+                    {isEditing ? 'Edit Contact' : 'Create Contact'}
                 </div>
                 <div onClick={closeModal} className="form-btn btn">
                     Close

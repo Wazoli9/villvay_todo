@@ -5,11 +5,11 @@ import Header from './components/Header';
 import Todos from './components/Todos';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(1)
+  const [currentUser, setCurrentUser] = useState()
   return (
     <div className="App">
       <Header currentUser = {currentUser} setCurrentUser = {setCurrentUser}/>
-      {currentUser ? <Todos/> : <SignInPage setCurrentUser = {setCurrentUser}/>}
+      {currentUser ? <Todos currentUser = {currentUser}/> : <SignInPage setCurrentUser = {setCurrentUser}/>}
     </div>
   );
 }
