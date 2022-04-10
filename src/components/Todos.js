@@ -4,6 +4,7 @@ import Todo from "./Todo";
 export default function Todos() {
     const [createdTodo, setCreatedTodo] = useState({
         id: undefined,
+        uid:undefined,
         title: "",
         asignee: "",
         date: "",
@@ -28,6 +29,9 @@ export default function Todos() {
             };
         });
     };
+    const closeModal = ()=>{
+        modalEl.current.close()
+    }
     return (
         <div className="todos">
             <h2 onClick={openModal} className="create-btn btn">
@@ -82,8 +86,11 @@ export default function Todos() {
                         />
                     </label>
                 </form>
-                <div className="submit-btn btn">
+                <div className="form-btn btn">
                     Create Task
+                </div>
+                <div onClick={closeModal} className="form-btn btn">
+                    Close
                 </div>
             </dialog>
         </div>

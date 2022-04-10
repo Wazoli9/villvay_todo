@@ -185,10 +185,11 @@ input{
   margin: 10px auto;
 }
 
-.submit-btn{
+.form-btn{
   font-size: 20px;
   width: fit-content;
   margin: auto;
+  margin-bottom: 15px;
 }
 
 dialog{
