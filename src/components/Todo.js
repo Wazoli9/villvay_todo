@@ -15,13 +15,13 @@ export default function Todo(props) {
                         <h3 className="todo-date">{props.todo.date}</h3>
                     </div>
                     <div className="todo-detail">
-                    <h3 className="todo-btn btn">{props.todo.done ? "Not Done" : "Done"}</h3>
+                    <h3 onClick={()=>props.handleDoneToggle(props.id, props.todo.done)} className="todo-btn btn">{props.todo.done ? "Not Done" : "Done"}</h3>
                     </div>
                     <div className="todo-detail">
                     <h3 onClick={()=>props.handleEdit(props.id, props.todo)} className="todo-btn btn">Edit</h3>
                     </div>
                     <div className="todo-detail">
-                    <h3 className="todo-btn btn">Delete</h3>
+                    <h3 onClick={()=>props.handleDelete(props.id)} className="todo-btn btn">Delete</h3>
                     </div>
                 </div>
             </div>

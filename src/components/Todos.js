@@ -7,7 +7,8 @@ import {
     onSnapshot,
     addDoc,
     doc,
-    updateDoc
+    updateDoc,
+    deleteDoc
 } from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -69,7 +70,6 @@ export default function Todos(props) {
     };
 
     const closeModal = () => {
-        modalEl.current.close();
         setIsEditing(false)
         setCreatedTodo({
             uid: props.currentUser.uid,
@@ -78,6 +78,7 @@ export default function Todos(props) {
             date: "",
             done: false,
         });
+        modalEl.current.close();
     };
 
     const handleEdit = (id, todo) =>{
@@ -87,8 +88,14 @@ export default function Todos(props) {
         setEditedId(id)
     }
 
-    const handleDoneToggle = (id) =>{
-        
+    const handleDoneToggle = async (id, done) =>{
+        await updateDoc(doc(db,'todos', id), {
+            done : !done
+        })
+    }
+
+    const handleDelete = async(id) =>{
+        await deleteDoc(doc(db, 'todos', id))
     }
 
     useEffect(() => {
@@ -112,6 +119,7 @@ export default function Todos(props) {
                             todo = {todo}
                             handleEdit = {handleEdit}
                             handleDoneToggle = {handleDoneToggle}
+                            handleDelete = {handleDelete}
                             id = {doc.id}
                         />
                     );
