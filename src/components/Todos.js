@@ -8,7 +8,7 @@ import {
     addDoc,
     doc,
     updateDoc,
-    deleteDoc
+    deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -45,9 +45,9 @@ export default function Todos(props) {
 
     const handleSubmit = async () => {
         console.log(createdTodo);
-        if(isEditing){
-            await updateDoc(doc(db, 'todos', editedId), createdTodo)
-            setIsEditing(false)
+        if (isEditing) {
+            await updateDoc(doc(db, "todos", editedId), createdTodo);
+            setIsEditing(false);
             setCreatedTodo({
                 uid: props.currentUser.uid,
                 title: "",
@@ -55,8 +55,7 @@ export default function Todos(props) {
                 date: "",
                 done: false,
             });
-        }
-        else{
+        } else {
             await addDoc(collection(db, "todos"), createdTodo);
             setCreatedTodo({
                 uid: props.currentUser.uid,
@@ -70,7 +69,7 @@ export default function Todos(props) {
     };
 
     const closeModal = () => {
-        setIsEditing(false)
+        setIsEditing(false);
         setCreatedTodo({
             uid: props.currentUser.uid,
             title: "",
@@ -81,22 +80,22 @@ export default function Todos(props) {
         modalEl.current.close();
     };
 
-    const handleEdit = (id, todo) =>{
-        modalEl.current.showModal()
-        setIsEditing(true)
-        setCreatedTodo(todo)
-        setEditedId(id)
-    }
+    const handleEdit = (id, todo) => {
+        modalEl.current.showModal();
+        setIsEditing(true);
+        setCreatedTodo(todo);
+        setEditedId(id);
+    };
 
-    const handleDoneToggle = async (id, done) =>{
-        await updateDoc(doc(db,'todos', id), {
-            done : !done
-        })
-    }
+    const handleDoneToggle = async (id, done) => {
+        await updateDoc(doc(db, "todos", id), {
+            done: !done,
+        });
+    };
 
-    const handleDelete = async(id) =>{
-        await deleteDoc(doc(db, 'todos', id))
-    }
+    const handleDelete = async (id) => {
+        await deleteDoc(doc(db, "todos", id));
+    };
 
     useEffect(() => {
         const q = query(
@@ -107,7 +106,7 @@ export default function Todos(props) {
             setTodoEls(
                 querySnapshot.docs.map((doc) => {
                     const todo = {
-                        uid : props.currentUser.uid,
+                        uid: props.currentUser.uid,
                         title: doc.data().title,
                         date: doc.data().date,
                         done: doc.data().done,
@@ -116,11 +115,11 @@ export default function Todos(props) {
                     return (
                         <Todo
                             key={doc.id}
-                            todo = {todo}
-                            handleEdit = {handleEdit}
-                            handleDoneToggle = {handleDoneToggle}
-                            handleDelete = {handleDelete}
-                            id = {doc.id}
+                            todo={todo}
+                            handleEdit={handleEdit}
+                            handleDoneToggle={handleDoneToggle}
+                            handleDelete={handleDelete}
+                            id={doc.id}
                         />
                     );
                 })
@@ -154,7 +153,7 @@ export default function Todos(props) {
                 </div>
             </div>
             <dialog ref={modalEl}>
-                <form className="create-form">
+                <form onSubmit={handleSubmit} className="create-form">
                     <label>
                         Task
                         <input
@@ -163,6 +162,7 @@ export default function Todos(props) {
                             value={createdTodo.title}
                             onChange={handleChange}
                             name="title"
+                            required
                         />
                     </label>
                     <label>
@@ -195,10 +195,12 @@ export default function Todos(props) {
                             name="done"
                         />
                     </label>
+                    <input
+                        type='submit'
+                        className="form-btn btn"
+                        value={isEditing ? "Edit Contact" : "Create Contact"}
+                    />
                 </form>
-                <div onClick={handleSubmit} className="form-btn btn">
-                    {isEditing ? 'Edit Contact' : 'Create Contact'}
-                </div>
                 <div onClick={closeModal} className="form-btn btn">
                     Close
                 </div>

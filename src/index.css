@@ -191,6 +191,7 @@ input{
 .form-btn{
   font-size: 25px;
   width: fit-content;
+  text-align: center;
   margin: auto;
   margin-bottom: 15px;
 }
