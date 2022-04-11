@@ -9,7 +9,10 @@ export default function Todo(props) {
     };
     return (
         <div className="todo">
-            <div className="todo-info">
+            <div
+                onClick={() => props.handleEdit(props.id, props.todo)}
+                className="todo-info"
+            >
                 <h2 className="todo-title">{props.todo.title}</h2>
                 <div className="todo-details">
                     <div className="todo-detail">
@@ -22,8 +25,9 @@ export default function Todo(props) {
                     </div>
                     <div className="todo-detail">
                         <h3
-                            onClick={() =>
+                            onClick={(e) =>
                                 props.handleDoneToggle(
+                                    e,
                                     props.id,
                                     props.todo.done
                                 )
@@ -35,17 +39,7 @@ export default function Todo(props) {
                     </div>
                     <div className="todo-detail">
                         <h3
-                            onClick={() =>
-                                props.handleEdit(props.id, props.todo)
-                            }
-                            className="todo-btn btn"
-                        >
-                            Edit
-                        </h3>
-                    </div>
-                    <div className="todo-detail">
-                        <h3
-                            onClick={() => props.handleDelete(props.id)}
+                            onClick={(e) => props.handleDelete(e, props.id)}
                             className="todo-btn btn"
                         >
                             Delete

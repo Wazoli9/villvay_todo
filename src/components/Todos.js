@@ -43,7 +43,8 @@ export default function Todos(props) {
         });
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault()
         console.log(createdTodo);
         if (isEditing) {
             await updateDoc(doc(db, "todos", editedId), createdTodo);
@@ -87,13 +88,15 @@ export default function Todos(props) {
         setEditedId(id);
     };
 
-    const handleDoneToggle = async (id, done) => {
+    const handleDoneToggle = async (event, id, done) => {
+        event.stopPropagation()
         await updateDoc(doc(db, "todos", id), {
             done: !done,
         });
     };
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (event, id) => {
+        event.stopPropagation()
         await deleteDoc(doc(db, "todos", id));
     };
 
