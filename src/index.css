@@ -134,6 +134,11 @@ h3{
   text-align: center;
   margin-top: 15px;
   margin-bottom: 5px;
+  word-break: break-all;
+}
+
+.todo-asignee{
+  word-break: break-all;
 }
 
 .todo-detail{
