@@ -3,11 +3,11 @@ import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
 
 export default function SignInPage(props) {
+    //sign in with firebase
     const signIn = () => {
         signInWithPopup(auth, provider)
             .then((result) => {
                 const user = result.user;
-                console.log(result.user);
                 props.setCurrentUser(user);
             })
             .catch((error) => {

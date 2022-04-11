@@ -9,7 +9,6 @@ export default function Header(props) {
                 props.setCurrentUser(undefined);
             })
             .catch((error) => {
-                console.log("error signing out");
             });
     };
     return (

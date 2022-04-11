@@ -15,6 +15,7 @@ import CreateForm from "./CreateForm";
 
 export default function Todos(props) {
     const [todoEls, setTodoEls] = useState();
+    //set so that can reuse create form for editing
     const [isEditing, setIsEditing] = useState(false);
     const [editedId, setEditedId] = useState();
     const [createdTodo, setCreatedTodo] = useState({
@@ -31,6 +32,7 @@ export default function Todos(props) {
         modalEl.current.showModal();
     };
 
+    //handle form changes by updating created todo
     const handleChange = (event) => {
         const target = event.target;
         const value =
@@ -45,30 +47,16 @@ export default function Todos(props) {
         });
     };
 
+    //add or update in database based on if editing
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(createdTodo);
         if (isEditing) {
             await updateDoc(doc(db, "todos", editedId), createdTodo);
-            setIsEditing(false);
-            setCreatedTodo({
-                uid: props.currentUser.uid,
-                title: "",
-                asignee: "",
-                date: "",
-                done: false,
-            });
         } else {
             await addDoc(collection(db, "todos"), createdTodo);
-            setCreatedTodo({
-                uid: props.currentUser.uid,
-                title: "",
-                asignee: "",
-                date: "",
-                done: false,
-            });
         }
-        modalEl.current.close();
+        //resets isEditing and createdTodo before closing
+        closeModal();
     };
 
     const closeModal = () => {
@@ -102,6 +90,8 @@ export default function Todos(props) {
         await deleteDoc(doc(db, "todos", id));
     };
 
+    //setup firestore listener to listen to realtime updates
+    //and update todoEls accordingly
     useEffect(() => {
         const q = query(
             collection(db, "todos"),
@@ -131,7 +121,7 @@ export default function Todos(props) {
             );
         });
         return () => {
-            console.log("cleanup");
+            //stop listening at cleanup
             unsubscribe();
         };
     }, [props.currentUser]);

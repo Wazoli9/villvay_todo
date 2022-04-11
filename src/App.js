@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Todos from "./components/Todos";
 
 function App() {
+  //auth for current user
     const [currentUser, setCurrentUser] = useState();
     return (
         <div className="App">
