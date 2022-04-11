@@ -6,6 +6,9 @@ export default function Todo(props) {
             const dateArray = props.todo.date.split("-");
             return `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`;
         }
+        else{
+            return 'N/A'
+        }
     };
     return (
         <div className="todo">
@@ -17,7 +20,7 @@ export default function Todo(props) {
                 <div className="todo-details">
                     <div className="todo-detail">
                         <h4>Asignee</h4>
-                        <h3 className="todo-asignee">{props.todo.asignee}</h3>
+                        <h3 className="todo-asignee">{props.todo.asignee ? props.todo.asignee : 'N/A'}</h3>
                     </div>
                     <div className="todo-detail">
                         <h4>Due Date</h4>
