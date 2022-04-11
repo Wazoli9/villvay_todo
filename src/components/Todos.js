@@ -27,7 +27,6 @@ export default function Todos(props) {
 
     const modalEl = useRef();
 
-    
     const openModal = () => {
         modalEl.current.showModal();
     };
@@ -47,7 +46,7 @@ export default function Todos(props) {
     };
 
     const handleSubmit = async (event) => {
-        event.preventDefault()
+        event.preventDefault();
         console.log(createdTodo);
         if (isEditing) {
             await updateDoc(doc(db, "todos", editedId), createdTodo);
@@ -92,14 +91,14 @@ export default function Todos(props) {
     };
 
     const handleDoneToggle = async (event, id, done) => {
-        event.stopPropagation()
+        event.stopPropagation();
         await updateDoc(doc(db, "todos", id), {
             done: !done,
         });
     };
 
     const handleDelete = async (event, id) => {
-        event.stopPropagation()
+        event.stopPropagation();
         await deleteDoc(doc(db, "todos", id));
     };
 
@@ -160,11 +159,11 @@ export default function Todos(props) {
             </div>
             <dialog ref={modalEl}>
                 <CreateForm
-                handleChange = {handleChange}
-                isEditing = {isEditing}
-                handleSubmit = {handleSubmit}
-                createdTodo = {createdTodo}
-                closeModal = {closeModal}
+                    handleChange={handleChange}
+                    isEditing={isEditing}
+                    handleSubmit={handleSubmit}
+                    createdTodo={createdTodo}
+                    closeModal={closeModal}
                 />
             </dialog>
         </div>

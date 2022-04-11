@@ -3,21 +3,23 @@ import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
 
 export default function SignInPage(props) {
-    const signIn = ()=>{
+    const signIn = () => {
         signInWithPopup(auth, provider)
-        .then((result) => {
-            const user = result.user;
-            console.log(result.user)
-            props.setCurrentUser(user)
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-        });
-    }
+            .then((result) => {
+                const user = result.user;
+                console.log(result.user);
+                props.setCurrentUser(user);
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+            });
+    };
     return (
         <div className="sign-in-container container">
-            <div onClick = {signIn} className="sign-in-btn btn">Sign In With Google</div>
+            <div onClick={signIn} className="sign-in-btn btn">
+                Sign In With Google
+            </div>
         </div>
     );
 }

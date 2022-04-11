@@ -6,10 +6,10 @@ export default function Header(props) {
     const signOutUser = () => {
         signOut(auth)
             .then(() => {
-                props.setCurrentUser(undefined)
+                props.setCurrentUser(undefined);
             })
             .catch((error) => {
-                console.log('error signing out')
+                console.log("error signing out");
             });
     };
     return (
@@ -17,7 +17,9 @@ export default function Header(props) {
             <div className="nav">
                 <div className="nav-title">Task Manager</div>
                 {props.currentUser && (
-                    <div onClick={signOutUser} className="btn sign-out-btn">Sign Out</div>
+                    <div onClick={signOutUser} className="btn sign-out-btn">
+                        Sign Out
+                    </div>
                 )}
             </div>
         </div>
