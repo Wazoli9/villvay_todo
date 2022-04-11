@@ -11,6 +11,7 @@ import {
     deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import CreateForm from "./CreateForm";
 
 export default function Todos(props) {
     const [todoEls, setTodoEls] = useState();
@@ -25,6 +26,8 @@ export default function Todos(props) {
     });
 
     const modalEl = useRef();
+
+    
     const openModal = () => {
         modalEl.current.showModal();
     };
@@ -156,57 +159,13 @@ export default function Todos(props) {
                 </div>
             </div>
             <dialog ref={modalEl}>
-                <form onSubmit={handleSubmit} className="create-form">
-                    <label>
-                        Task
-                        <input
-                            className="title-input"
-                            type="text"
-                            value={createdTodo.title}
-                            onChange={handleChange}
-                            name="title"
-                            required
-                        />
-                    </label>
-                    <label>
-                        Asignee
-                        <input
-                            className="asignee-input"
-                            type="text"
-                            value={createdTodo.asignee}
-                            onChange={handleChange}
-                            name="asignee"
-                        />
-                    </label>
-                    <label>
-                        Due Date
-                        <input
-                            className="date-input"
-                            type="date"
-                            value={createdTodo.date}
-                            onChange={handleChange}
-                            name="date"
-                        />
-                    </label>
-                    <label>
-                        Completed
-                        <input
-                            className="check-input"
-                            type="checkbox"
-                            checked={createdTodo.done}
-                            onChange={handleChange}
-                            name="done"
-                        />
-                    </label>
-                    <input
-                        type='submit'
-                        className="form-btn btn"
-                        value={isEditing ? "Edit Contact" : "Create Contact"}
-                    />
-                </form>
-                <div onClick={closeModal} className="form-btn btn">
-                    Close
-                </div>
+                <CreateForm
+                handleChange = {handleChange}
+                isEditing = {isEditing}
+                handleSubmit = {handleSubmit}
+                createdTodo = {createdTodo}
+                closeModal = {closeModal}
+                />
             </dialog>
         </div>
     );
